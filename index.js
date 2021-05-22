@@ -150,7 +150,6 @@ function showAQI(aqi,time,city,temp)
  const timeTemp="<p>Updated on "+d+"</p>";
  document.getElementById("AQI-head").innerHTML=city.split(', India', 1);
  document.getElementById("AQI-info").innerHTML="<span>"+text+"</span>"+"<br>"+timeTemp+"<br>";
- text=text.toLowerCase();
  document.getElementById("AQI-img").src = text+".png";
 }
 function storeData(aqi,data)
