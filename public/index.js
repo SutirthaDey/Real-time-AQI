@@ -22,7 +22,7 @@ function chartIt(ctx,data,labelText,scale)
   let xlabels=[];
   const ylabels=[];
   let maxValue=-1;
-   for(var i=0;i<5;i++)
+   for(var i=0;i<data.length;i++)
     {
      xlabels.push(data[i].avg);
      ylabels.push(data[i].day.slice(5,10));
@@ -119,31 +119,37 @@ function showAQI(aqi,time,city,temp)
   {
   document.getElementById("AQI-logo").style.backgroundColor="#82161a";
   text="Hazardous";
+  document.body.style.backgroundImage= "linear-gradient(110deg, rgba(130,22,26,0.9), white)"; //130, 22, 26
   }
   else if(aqi>200)
   {
   document.getElementById("AQI-logo").style.backgroundColor="#750ea1";
+  document.body.style.backgroundImage= "linear-gradient(110deg, rgba(174,0,255,0.9), white)"; //174, 0, 255
   text="Dangerous";
   }
   else if(aqi>150)
   {
   document.getElementById("AQI-logo").style.backgroundColor="#e32733";
   text="Unhealthy";
+  document.body.style.backgroundImage= "linear-gradient(110deg, rgba(240,24,38,0.9), white)"; //240, 24, 38
   }
   else if(aqi>100)
   {
   document.getElementById("AQI-logo").style.backgroundColor="#FF8C00";
   text="Moderate";
+  document.body.style.backgroundImage= "linear-gradient(110deg, rgba(255, 102, 0,0.9),white)"; //255, 102, 0
   }
   else if(aqi>50)
   {
   document.getElementById("AQI-logo").style.backgroundColor="#fcfc32";
   text="Satisfactory";
+  document.body.style.backgroundImage= "linear-gradient(110deg,rgba(255, 255, 0,0.9),white)";
   }
   else
   {
   document.getElementById("AQI-logo").style.backgroundColor="#23eb37";
   text="Good";
+  document.body.style.backgroundImage= "linear-gradient(105deg, rgba(35,235,55,0.9),white)";
   }
  let d=new Date().toLocaleString('en-us', {  weekday: 'long' })+" "+tm;
  // const timeTemp="<p>Updated on "+d+"</p>"+"<p>Temp : "+Math.round(temp)+"°C</p>";

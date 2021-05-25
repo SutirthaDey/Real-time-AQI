@@ -3,9 +3,10 @@
   height: 300px;
   width: 100%;
   margin-top: 0;
-  background-image: url("clouds1.jpg");
+  background-image: url("clouds3.jpg");
   background-repeat: no-repeat;
-  background-size: 100% 150%;
+  /* background-size: 100% 150%; */
+  background-size: 100% 120%;
 }
 .upper-nav-text
 {
@@ -31,14 +32,15 @@ body,html
   margin:0;
   padding:0;
   overflow-x: hidden;
+  /* background-image: linear-gradient(120deg, red, white); */
 }
 a
 {
   text-decoration: none;
   font-weight: bold;
   font-family: 'Open Sans', sans-serif;
-  color: #fefdfd;
-  font-size: 13px;
+  color: white;
+  font-size: 15px;
   display: inline-block;
   width:100%;
   height: 100%;
@@ -50,9 +52,10 @@ a
 }
 #middle-menu td
 {
-  /* border: 1px solid #0c0a6e; */
+  border: 1px solid #0c0a6e;
   text-align: center;
   height:40px;
+  border-radius: 5%;
 }
 #middle-menu td:hover
 {
@@ -82,12 +85,12 @@ a
   font-size: 4rem; */
   height: 70px;
   width: 150px;
-  border-radius: 10px;
   margin-left: 5px;
   margin-top: 15px;
   text-align: center;
   font-size: 3.3rem;
   display: inline-block;
+  border-radius: 20%;
 }
 #AQI-img
 {
@@ -103,11 +106,12 @@ a
 {
   height: 230px;
   width: 500px;
-  border: 1px solid #dce3e3;
+  border: 2px solid #dce3e3;
   margin: 0 auto;
   margin-top: 40px;
   background-color:#f5f7f7;
-  position: relative
+  position: relative;
+  border-radius: 10px;
 }
 #AQI-info
 {
@@ -145,6 +149,7 @@ a
   height: 60px;
   font-family: 'Poppins', sans-serif;
   padding: 10px;
+  margin-bottom: 10px;
 }
 canvas
 {
@@ -159,7 +164,7 @@ canvas
 height: 450px;
 width: 400px;
 border: 1px solid #dce3e3;
-margin: 20px auto;
+margin: 0 auto;
 background-color:#f5f7f7;
 border-radius: 10px;
 }
@@ -181,8 +186,8 @@ border-radius: 10px;
 #middle-body
 {
   margin: 0 auto;
-  border-spacing: 30px;
   text-align: centre;
+  /* background-color: red; */
 }
 .weather
 {
@@ -190,17 +195,22 @@ border-radius: 10px;
   border: 1px solid #dce3e3;
   padding: 5px;
 }
-@media (max-width:1200px)
+@media (max-width:1000px)
 {
+  #middle-body
+  {
+    margin: 0 auto;
+    text-align: centre;
+  }
   .AQI-main
   {
     width: 490px;
   }
   #middle-body td
   {
-    width: 80%;
-    display: inline-block;
-    margin: 0 auto;
+    width: 100%;
+    display: inline;
+    /* margin: 0 auto; */
   }
   .body-left
   {
