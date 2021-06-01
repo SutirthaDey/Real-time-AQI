@@ -209,6 +209,21 @@ var data = {
 // };
 // xhr.setRequestHeader('Content-Type', 'application/json');
 // xhr.send(JSON.stringify(data));
+ var xhr = new XMLHttpRequest();
+ xhr.open('POST', '/');
+ xhr.onload = function(data) {
+ const json= JSON.parse(this.responseText);
+ const aqi=json.data.aqi;  // aqi index
+ const iaqi=json.data.iaqi;            // current-time data
+ const time=json.data.time;           //current time
+ const debug=json.data.debug;        //synched time
+ const city=json.data.city;
+ showAQI(aqi,time.s,city.name,iaqi.t.v);
+ showWeather(iaqi);
+ console.log(debug);
+ };
+ xhr.setRequestHeader('Content-Type', 'application/json');
+ xhr.send(JSON.stringify(data));
 document.getElementById('middle-menu').addEventListener('click',(e)=>
 {
   const text=e.target.text;
@@ -218,7 +233,7 @@ document.getElementById('middle-menu').addEventListener('click',(e)=>
        latitude: lat,
        longitude: long
    };
-   var xhr = new XMLHttpRequest();
+   xhr = new XMLHttpRequest();
    xhr.open('POST', '/');
    xhr.onload = function(data) {
    const json= JSON.parse(this.responseText);
