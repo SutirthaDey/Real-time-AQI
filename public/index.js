@@ -170,7 +170,7 @@ function trunc(number)
 {
   return Math.round(number*10)/10;
 }
-function showWeather(daily,iaqi)
+function showWeather(iaqi)
 {
   let aqi=[];
   storeData(aqi,iaqi.pm25);
@@ -191,68 +191,45 @@ var data = {
     latitude: 22.56263,
     longitude: 88.36304
 };
-const xhr = new XMLHttpRequest();
-xhr.open('POST', '/');
-xhr.onload = function(data) {
-const json= JSON.parse(this.responseText);
-const aqi=json.data.aqi;  // aqi index
-const daily=json.data.forecast.daily;  //forcase data
-const iaqi=json.data.iaqi;            // current-time data
-const time=json.data.time;           //current time
-const debug=json.data.debug;        //synched time
-const city=json.data.city;
-showAQI(aqi,time.s,city.name,iaqi.t.v);
-console.log('loaded', daily.o3[0].avg);
-Chart.defaults.font.size= 18;
-Chart.defaults.font.weight= "bold";
-clearChart();
-var ctx;
-ctx= document.getElementById('myChart').getContext('2d');
-chartIt(ctx,daily.o3,"o3",[209,169,101,51]);
-ctx=document.getElementById('myChart1').getContext('2d');
-chartIt(ctx,daily.pm10,"pm10",[351,251,101,51]);
-ctx=document.getElementById('myChart2').getContext('2d');
-chartIt(ctx,daily.pm25,"pm25",[121,91,61,31]);
-ctx=document.getElementById('myChart3').getContext('2d');
-chartIt(ctx,daily.uvi,"uvi",[8,6,3,2]);
-showWeather(daily,iaqi);
-};
-xhr.setRequestHeader('Content-Type', 'application/json');
-xhr.send(JSON.stringify(data));
+// var xhr = new XMLHttpRequest();
+// xhr.open('POST', '/');
+// xhr.onload = function(data) {
+// const json= JSON.parse(this.responseText);
+// const aqi=json.data.aqi;  // aqi index
+// const iaqi=json.data.iaqi;            // current-time data
+// const time=json.data.time;           //current time
+// const debug=json.data.debug;        //synched time
+// const city=json.data.city;
+// showAQI(aqi,time.s,city.name,iaqi.t.v);
+// Chart.defaults.font.size= 18;
+// Chart.defaults.font.weight= "bold";
+// clearChart();
+// var ctx;
+// showWeather(iaqi);
+// };
+// xhr.setRequestHeader('Content-Type', 'application/json');
+// xhr.send(JSON.stringify(data));
 document.getElementById('middle-menu').addEventListener('click',(e)=>
 {
   const text=e.target.text;
   const lat=cordinate[text][0];
   const long=cordinate[text][1];
-  const xhr = new XMLHttpRequest();
    var data = {
        latitude: lat,
        longitude: long
    };
+   var xhr = new XMLHttpRequest();
    xhr.open('POST', '/');
    xhr.onload = function(data) {
    const json= JSON.parse(this.responseText);
    const aqi=json.data.aqi;  // aqi index
-   const daily=json.data.forecast.daily;  //forcase data
    const iaqi=json.data.iaqi;            // current-time data
    const time=json.data.time;           //current time
    const debug=json.data.debug;        //synched time
    const city=json.data.city;
    showAQI(aqi,time.s,city.name,iaqi.t.v);
-   console.log('loaded', daily.o3[0].avg);
-   Chart.defaults.font.size= 18;
-   Chart.defaults.font.weight= "bold";
-   clearChart();
-   var ctx;
-   ctx= document.getElementById('myChart').getContext('2d');
-   chartIt(ctx,daily.o3,"o3",[209,169,101,51]);
-   ctx=document.getElementById('myChart1').getContext('2d');
-   chartIt(ctx,daily.pm10,"pm10",[351,251,101,51]);
-   ctx=document.getElementById('myChart2').getContext('2d');
-   chartIt(ctx,daily.pm25,"pm25",[121,91,61,31]);
-   ctx=document.getElementById('myChart3').getContext('2d');
-   chartIt(ctx,daily.uvi,"uvi",[8,6,3,2]);
-   showWeather(daily,iaqi);
+   showWeather(iaqi);
+   console.log(debug);
    };
    xhr.setRequestHeader('Content-Type', 'application/json');
    xhr.send(JSON.stringify(data));
@@ -268,3 +245,6 @@ document.getElementById('middle-menu').addEventListener('click',(e)=>
 // chartIt(ctx,daily.pm25)
 // ctx=document.getElementById('myChart3').getContext('2d');
 // chartIt(ctx,daily.uvi)
+
+
+// 095ed0eb2eca12fc9a1de055bf7bb87b

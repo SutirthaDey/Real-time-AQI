@@ -12,7 +12,6 @@ app.use(express.json({ limit: '1mb'}));
 app.get("/",function(req,res){
    res.sendFile(__dirname+"/"+"index.html");
 });
-//"22.56263","88.36304"
 app.post('/', function(req, res){
     const lat=req.body.latitude;
     const long=req.body.longitude;
@@ -21,16 +20,16 @@ app.post('/', function(req, res){
       latitude:lat,
       longitude:long
     }
-    url="https://api.waqi.info/feed/geo:" + lat + ";" + long + "/?token=" + api_key + "";
-    https.get(url, function(response){
-
+    url1="https://api.waqi.info/feed/geo:" + lat + ";" + long + "/?token=" + api_key + "";
+    url2="https://api.openweathermap.org/data/2.5/air_pollution/history?lat=22.06047&lon=88.109737&start=1622246400&end=1622264400&appid=095ed0eb2eca12fc9a1de055bf7bb87b#";
+    https.get(url1, function(response){
       response.on("data",function(data){
-        weatherData = JSON.parse(data);
-        //console.log(weatherData);
+        let weatherData = JSON.parse(data);
+        console.log(weatherData);
         res.send(weatherData);
       })
     })
-});
+  });
 app.listen(process.env.PORT || 3000,function(){
   console.log("Server is running on port 3000");
 });
