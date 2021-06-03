@@ -224,11 +224,15 @@ var ctx;
 var ctx = document.getElementById('myChart').getContext('2d');
 chartIt(ctx,past_aqi.list,"o3");
 ctx=document.getElementById('myChart1').getContext('2d');
-chartIt(ctx,past_aqi.list,"pm10")
+chartIt(ctx,past_aqi.list,"pm10");
 ctx=document.getElementById('myChart2').getContext('2d');
-chartIt(ctx,past_aqi.list,"pm25")
+chartIt(ctx,past_aqi.list,"pm25");
 ctx=document.getElementById('myChart3').getContext('2d');
-chartIt(ctx,past_aqi.list,"so2")
+chartIt(ctx,past_aqi.list,"so2");
+ctx=document.getElementById('myChart4').getContext('2d');
+chartIt(ctx,past_aqi.list,"co");
+ctx=document.getElementById('myChart5').getContext('2d');
+chartIt(ctx,past_aqi.list,"no");
 }
 currentAQI(22.56263,88.36304);
 document.getElementById('middle-menu').addEventListener('click',(e)=>
