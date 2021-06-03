@@ -17,11 +17,12 @@ function clearChart()
     myChartList[i].destroy();
   }
 }
-function chartIt(ctx,data,labelText,scale)
+function chartIt(ctx,data,labelText)
 {
   let xlabels=[];
   const ylabels=[];
   let maxValue=-1;
+  let scale=[250.5,150.5,55.5,35.5,12.1];
    for(var i=0;i<data.length;i++)
     {
      // xlabels.push(data[i].avg);
@@ -36,7 +37,7 @@ function chartIt(ctx,data,labelText,scale)
      xlabels.push(data[i].components.pm10);
      else
      xlabels.push(data[i].components.so2);
-     ylabels.push(i+'H');
+     ylabels.push(i+'H ago');
      if(xlabels[i]>maxValue)
      maxValue=xlabels[i];
     }
@@ -46,7 +47,7 @@ const myChart = new Chart(ctx, {
       data: {
           labels: ylabels,
           datasets: [{
-              label: labelText+"-level",
+              label: labelText+"-level(μg/m3)",
               data: xlabels,
               backgroundColor: [
                   'rgba(255, 99, 132, 0.4)',
@@ -84,20 +85,20 @@ const myChart = new Chart(ctx, {
           }
       }
   });
-  var red = scale[0];
-  var orange=scale[1];
-  var yellow=scale[2]; //set this to whatever is the deciding color change value
-  var lightGreen=scale[3];
+  var red = scale[2];
+  var orange=scale[3];
+  var yellow=scale[4]; //set this to whatever is the deciding color change value
+  var lightGreen=scale[5];
   var dataset = myChart.data.datasets[0];
   for (var i = 0; i < dataset.data.length; i++) {
   if (dataset.data[i] >=red)
         {
-        dataset.backgroundColor[i] = 'rgba(255, 0, 0, 0.4)';
+        dataset.backgroundColor[i] = 'rgba(255, 0, 0, 0.7)';
         dataset.borderColor[i] = 'rgba(255, 0, 0, 1)';
         }
   else if(dataset.data[i]>=orange)
         {
-        dataset.backgroundColor[i]=  'rgba(255, 69, 0, 0.4)';
+        dataset.backgroundColor[i]=  'rgba(255, 69, 0, 0.3)';
         dataset.borderColor[i] = 'rgba(255, 69, 0, 1)';
         }
   else if(dataset.data[i]>=yellow)
@@ -105,16 +106,15 @@ const myChart = new Chart(ctx, {
         dataset.backgroundColor[i]=  'rgba(255, 255, 0, 0.4)';
         dataset.borderColor[i] = 'rgba(255, 255, 0, 1)';
         }
-  else if(dataset.data[i]>=lightGreen)
-        {
+  else {
         dataset.backgroundColor[i]= 'rgba(0, 100, 0, 0.4)';
         dataset.borderColor[i] = 'rgba(0, 100, 0, 1)';
         }
-  else
-        {
-        dataset.backgroundColor[i]= 'rgba(0, 255, 0, 0.4)';
-        dataset.borderColor[i] = 'rgba(0, 255, 0, 1)';
-        }
+  // else
+  //       {
+  //       dataset.backgroundColor[i]= 'rgba(0, 255, 0, 0.4)';
+  //       dataset.borderColor[i] = 'rgba(0, 255, 0, 1)';
+  //       }
 
     }
     myChart.update();
@@ -217,18 +217,18 @@ showAQI(aqi,time.s,city.name,iaqi.t.v);
 showWeather(iaqi);
 // console.log(past_aqi.list[47].components.pm10);
 console.log(past_aqi.list[47].dt);
-Chart.defaults.font.size= 12;
+Chart.defaults.font.size= 10;
 Chart.defaults.font.weight= "bold";
 clearChart();
 var ctx;
 var ctx = document.getElementById('myChart').getContext('2d');
-chartIt(ctx,past_aqi.list,"o3",[100,50,30,20]);
+chartIt(ctx,past_aqi.list,"o3");
 ctx=document.getElementById('myChart1').getContext('2d');
-chartIt(ctx,past_aqi.list,"pm10",[100,50,30,20])
+chartIt(ctx,past_aqi.list,"pm10")
 ctx=document.getElementById('myChart2').getContext('2d');
-chartIt(ctx,past_aqi.list,"pm25",[100,50,30,20])
+chartIt(ctx,past_aqi.list,"pm25")
 ctx=document.getElementById('myChart3').getContext('2d');
-chartIt(ctx,past_aqi.list,"so2",[100,50,30,20])
+chartIt(ctx,past_aqi.list,"so2")
 }
 currentAQI(22.56263,88.36304);
 document.getElementById('middle-menu').addEventListener('click',(e)=>
