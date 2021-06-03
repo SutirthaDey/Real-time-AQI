@@ -24,8 +24,19 @@ function chartIt(ctx,data,labelText,scale)
   let maxValue=-1;
    for(var i=0;i<data.length;i++)
     {
-     xlabels.push(data[i].avg);
-     ylabels.push(data[i].day.slice(5,10));
+     // xlabels.push(data[i].avg);
+     // ylabels.push(data[i].day.slice(5,10));
+     // if(xlabels[i]>maxValue)
+     // maxValue=xlabels[i];
+     if(labelText=='o3')
+     xlabels.push(data[i].components.o3);
+     else if(labelText=='pm25')
+     xlabels.push(data[i].components.pm2_5);
+     else if(labelText=='pm10')
+     xlabels.push(data[i].components.pm10);
+     else
+     xlabels.push(data[i].components.so2);
+     ylabels.push(i+'H');
      if(xlabels[i]>maxValue)
      maxValue=xlabels[i];
     }
@@ -187,79 +198,45 @@ function showWeather(iaqi)
     data[i].innerHTML=aqi[i];
   }
 }
-var data = {
-    latitude: 22.56263,
-    longitude: 88.36304
-};
-// var xhr = new XMLHttpRequest();
-// xhr.open('POST', '/');
-// xhr.onload = function(data) {
-// const json= JSON.parse(this.responseText);
-// const aqi=json.data.aqi;  // aqi index
-// const iaqi=json.data.iaqi;            // current-time data
-// const time=json.data.time;           //current time
-// const debug=json.data.debug;        //synched time
-// const city=json.data.city;
-// showAQI(aqi,time.s,city.name,iaqi.t.v);
-// Chart.defaults.font.size= 18;
-// Chart.defaults.font.weight= "bold";
-// clearChart();
-// var ctx;
-// showWeather(iaqi);
-// };
-// xhr.setRequestHeader('Content-Type', 'application/json');
-// xhr.send(JSON.stringify(data));
- var xhr = new XMLHttpRequest();
- xhr.open('POST', '/');
- xhr.onload = function(data) {
- const json= JSON.parse(this.responseText);
- const aqi=json.data.aqi;  // aqi index
- const iaqi=json.data.iaqi;            // current-time data
- const time=json.data.time;           //current time
- const debug=json.data.debug;        //synched time
- const city=json.data.city;
- showAQI(aqi,time.s,city.name,iaqi.t.v);
- showWeather(iaqi);
- console.log(debug);
- };
- xhr.setRequestHeader('Content-Type', 'application/json');
- xhr.send(JSON.stringify(data));
+//*************************************************************
+async function currentAQI(lat,long)
+{
+const end = Math.floor(Date.now()/1000); //most latest
+const start = end -(48*3600); // most old
+const api_url = `weather/${lat},${long},${start},${end}`;
+const response =await fetch(api_url);
+const json =await response.json();
+const currentAQI=json.current_aqi;
+const past_aqi=json.past_aqi;
+const aqi=currentAQI.data.aqi;  // aqi index
+const iaqi=currentAQI.data.iaqi;            // current-time data
+const time=currentAQI.data.time;           //current time
+const debug=currentAQI.data.debug;        //synched time
+const city=currentAQI.data.city;
+showAQI(aqi,time.s,city.name,iaqi.t.v);
+showWeather(iaqi);
+// console.log(past_aqi.list[47].components.pm10);
+console.log(past_aqi.list[47].dt);
+Chart.defaults.font.size= 12;
+Chart.defaults.font.weight= "bold";
+clearChart();
+var ctx;
+var ctx = document.getElementById('myChart').getContext('2d');
+chartIt(ctx,past_aqi.list,"o3",[100,50,30,20]);
+ctx=document.getElementById('myChart1').getContext('2d');
+chartIt(ctx,past_aqi.list,"pm10",[100,50,30,20])
+ctx=document.getElementById('myChart2').getContext('2d');
+chartIt(ctx,past_aqi.list,"pm25",[100,50,30,20])
+ctx=document.getElementById('myChart3').getContext('2d');
+chartIt(ctx,past_aqi.list,"so2",[100,50,30,20])
+}
+currentAQI(22.56263,88.36304);
 document.getElementById('middle-menu').addEventListener('click',(e)=>
 {
   const text=e.target.text;
   const lat=cordinate[text][0];
   const long=cordinate[text][1];
-   var data = {
-       latitude: lat,
-       longitude: long
-   };
-   xhr = new XMLHttpRequest();
-   xhr.open('POST', '/');
-   xhr.onload = function(data) {
-   const json= JSON.parse(this.responseText);
-   const aqi=json.data.aqi;  // aqi index
-   const iaqi=json.data.iaqi;            // current-time data
-   const time=json.data.time;           //current time
-   const debug=json.data.debug;        //synched time
-   const city=json.data.city;
-   showAQI(aqi,time.s,city.name,iaqi.t.v);
-   showWeather(iaqi);
-   console.log(debug);
-   };
-   xhr.setRequestHeader('Content-Type', 'application/json');
-   xhr.send(JSON.stringify(data));
+  currentAQI(lat,long);
 });
-
-
-
-// var ctx = document.getElementById('myChart').getContext('2d');
-// chartIt(ctx,daily.o3);
-// ctx=document.getElementById('myChart1').getContext('2d');
-// chartIt(ctx,daily.pm10)
-// ctx=document.getElementById('myChart2').getContext('2d');
-// chartIt(ctx,daily.pm25)
-// ctx=document.getElementById('myChart3').getContext('2d');
-// chartIt(ctx,daily.uvi)
-
-
+//*****************************************
 // 095ed0eb2eca12fc9a1de055bf7bb87b
