@@ -35,8 +35,12 @@ function chartIt(ctx,data,labelText)
      xlabels.push(data[i].components.pm2_5);
      else if(labelText=='pm10')
      xlabels.push(data[i].components.pm10);
-     else
+     else if(labelText=='so2')
      xlabels.push(data[i].components.so2);
+     else if(labelText=='co')
+     xlabels.push(data[i].components.co);
+     else
+     xlabels.push(data[i].components.no2);
      ylabels.push(i+'H ago');
      if(xlabels[i]>maxValue)
      maxValue=xlabels[i];
@@ -232,7 +236,7 @@ chartIt(ctx,past_aqi.list,"so2");
 ctx=document.getElementById('myChart4').getContext('2d');
 chartIt(ctx,past_aqi.list,"co");
 ctx=document.getElementById('myChart5').getContext('2d');
-chartIt(ctx,past_aqi.list,"no");
+chartIt(ctx,past_aqi.list,"no2");
 }
 currentAQI(22.56263,88.36304);
 document.getElementById('middle-menu').addEventListener('click',(e)=>
